@@ -1,43 +1,39 @@
-group 'com.cheebeez.radio_player'
-version '1.0-SNAPSHOT'
-
-buildscript {
-    ext.kotlin_version = '1.7.10'
-    repositories {
-        google()
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id "com.android.library"
+    id "org.jetbrains.kotlin.android"
 }
-
-rootProject.allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 34
+    namespace "com.cheebeez.radio_player"
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 23
+    }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main.java.srcDirs += "src/main/kotlin"
     }
-    defaultConfig {
-        minSdkVersion 23
+
+    // вирівнюємо Java на 17
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
+    // і Kotlin теж на 17
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+kotlin {
+    // офіційний шлях — toolchain
+    jvmToolchain(17)
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
     implementation "com.google.android.exoplayer:exoplayer:2.19.1"
     implementation "com.google.android.exoplayer:extension-mediasession:2.19.1"
     implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.1.0"
